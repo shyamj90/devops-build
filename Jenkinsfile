@@ -2,7 +2,6 @@ pipeline{
     agent any
     environment{
         DOCKERHUB_CREDS=credentials("dockerhub")
-        SSH_CREDS=credentials("ssh-creds")
         IMAGE_NAME="shyamj90/devops"
     }
     stages{
@@ -35,7 +34,7 @@ pipeline{
         }
         stage('SSH to target') {
             steps {
-                sshagent(["$SSH_CREDS"]) {
+                sshagent(["ssh-creds"]) {
                     sh 'scp docker-compose.yaml ec2-user@172.31.35.56:/home/ec2-user/app/'
                     sh 'ssh ec2-user@172.31.35.56 "cd /home/ec2-user/app && docker compose up -d"'                }
             }
