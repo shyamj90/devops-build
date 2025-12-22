@@ -35,8 +35,8 @@ pipeline{
         stage('SSH to target') {
             steps {
                 sshagent(["ssh-creds"]) {
-                    sh 'scp docker-compose.yaml ec2-user@172.31.35.56:/home/ec2-user/app/'
-                    sh 'ssh ec2-user@172.31.35.56 "cd /home/ec2-user/app && docker compose up -d"'                }
+                    sh 'scp -o StrictHostKeyChecking=no docker-compose.yaml ec2-user@172.31.35.56:/home/ec2-user/app/'
+                    sh 'ssh -o StrictHostKeyChecking=no ec2-user@172.31.35.56 "cd /home/ec2-user/app && docker compose up -d"'                }
             }
         }
     }
