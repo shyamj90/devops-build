@@ -35,7 +35,7 @@ pipeline{
         }
         stage('SSH to target') {
             steps {
-                sshagent(['$SSH_CREDS']) {
+                sshagent(["$SSH_CREDS"]) {
                     sh 'scp docker-compose.yaml ec2-user@172.31.35.56:/home/ec2-user/app/'
                     sh 'ssh ec2-user@172.31.35.56 "cd /home/ec2-user/app && docker compose up -d"'                }
             }
