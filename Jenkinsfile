@@ -13,7 +13,7 @@ pipeline{
         stage("Build Image"){
             steps{
                 script{
-                    sh "docker build -t $IMAGE_NAME:latest ."
+                    sh "./scripts/build.sh ${env.GIT_BRANCH}"
                 }
             }
         }
