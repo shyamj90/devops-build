@@ -3,7 +3,7 @@ services:
   app:
     image: shyamj90/prod
     ports:
-      - "8083:80"
+      - "80:80"
     restart: always
   prometheus:
     image: prom/prometheus:latest
