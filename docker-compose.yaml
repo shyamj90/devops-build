@@ -23,4 +23,11 @@ services:
       - '--path.rootfs=/host'
     volumes:
       - '/:/host:ro,rslave'
-
+  blackbox-exporter:
+    image: prom/blackbox-exporter:latest
+    ports:
+      - "9115:9115"
+    command:
+      - '--config.file=/etc/blackbox_exporter/config.yml'
+    volumes:
+      - ./blackbox.yml:/etc/blackbox_exporter/config.yml
