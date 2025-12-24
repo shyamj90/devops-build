@@ -26,16 +26,16 @@ pipeline{
         stage("Push Image to Dockerhub"){
             steps{
                 script{
-                    sh "./scripts/deploy.sh ${env.GIT_BRANCH}"
+                    sh "./scripts/image_push.sh ${env.GIT_BRANCH}"
                 }
             }
 
         }
-        stage('SSH to target') {
+        stage('Deploy to App Server') {
             steps {
                 sshagent(["ssh-creds"]) {
-                    sh 'scp -o StrictHostKeyChecking=no docker-compose.yaml prometheus.yml blackbox.yml ec2-user@172.31.35.56:/home/ec2-user/app/'
-                    sh 'ssh -o StrictHostKeyChecking=no ec2-user@172.31.35.56 "cd /home/ec2-user/app && docker compose up -d"'                }
+                    sh "./scripts/deploy.sh"
+                }
             }
         }
     }
