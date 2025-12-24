@@ -6,7 +6,7 @@ pipeline{
     stages{
         stage("Clone Repo"){
             steps{
-                git branch: "dev" , url : "https://github.com/shyamj90/devops-build"
+                git branch: "main" , url : "https://github.com/shyamj90/devops-build"
             }
         }
         stage("Build Image"){
