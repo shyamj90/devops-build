@@ -1,17 +1,8 @@
 #!/bin/bash
 set -e
 
-IMAGE_NAME="shyamj90"
-BRANCH_NAME=$1
-BRANCH_NAME="${BRANCH_NAME#origin/}"
+# Secure Transfer the manifests and configs to the App server
+scp -o StrictHostKeyChecking=no docker-compose.yaml prometheus.yml blackbox.yml ec2-user@172.31.35.56:/home/ec2-user/app/
+# SSH connection
+ssh -o StrictHostKeyChecking=no ec2-user@172.31.35.56 "cd /home/ec2-user/app && docker compose up -d"
 
-
-if [ "$BRANCH_NAME" == "dev" ]; then
-  echo "Deploying to DEV repo..."
-  docker push ${IMAGE_NAME}/${BRANCH_NAME}
-elif [ "$BRANCH_NAME" == "main" ]; then
-  echo "Deploying to PROD repo..."
-  docker push ${IMAGE_NAME}/prod
-else
-  echo "Branch $BRANCH_NAME does not trigger deployment."
-fi
