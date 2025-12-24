@@ -2,7 +2,6 @@ pipeline{
     agent any
     environment{
         DOCKERHUB_CREDS=credentials("dockerhub")
-        IMAGE_NAME="shyamj90/devops"
     }
     stages{
         stage("Clone Repo"){
@@ -27,7 +26,7 @@ pipeline{
         stage("Push Image to Dockerhub"){
             steps{
                 script{
-                    sh "docker push $IMAGE_NAME:latest"
+                    sh "./scripts/deploy.sh ${env.GIT_BRANCH}"
                 }
             }
 
